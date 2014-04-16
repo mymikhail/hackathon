@@ -36,13 +36,13 @@
 
         <ul class="nav nav-tabs" id="myTab">
             <li class="active">
-                <a href="#quickSearch" class="tab-link">Быстрый поиск</a>
+                <a href="#quickSearch" class="tab-link" data-toggle="tab">Быстрый поиск</a>
             </li>
             <li>
-                <a href="#extendedSearch" class="tab-link">Расширенный поиск</a>
+                <a href="#extendedSearch" class="tab-link" data-toggle="tab">Расширенный поиск</a>
             </li>
             <li>
-                <a href="#myModal" data-toggle="modal" class="list-item-add-link">Добавить элемент</a>
+                <a href="#addItem" data-toggle="tab" class="tab-link list-item-add-link">Добавить элемент</a>
             </li>
         </ul>
 

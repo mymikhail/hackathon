@@ -7,7 +7,7 @@
                 model: oListModel
             })
         ;
-//        oListView.listenTo(oListModel, 'change', oListView.render);
+        oListView.listenTo(oListModel, 'change', oListView.render);
 
 
         var oPopupModel = new PopupModel
@@ -22,6 +22,7 @@
                 oPopupModel.onListItemEdit(data);
             })
             .on('list:add', function(){
+                oPopupView.$el.modal('show');
                 oPopupView.render();
             })
         ;

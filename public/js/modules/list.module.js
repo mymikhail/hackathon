@@ -78,10 +78,12 @@
             this.$el.html(template);
         },
         onListItemEdit: function(e){
+            e.preventDefault();
             var data = $(e.currentTarget).closest('tr').data();
             appEventHandler.trigger('list:edit', data);
         },
         onListItemRemove: function(e){
+            e.preventDefault();
             $(e.currentTarget).closest('tr').remove();
         }
     });

@@ -1,15 +1,18 @@
 ;(function($){
+
+    var oItemDefaults = {
+        id: null,
+        type: null,
+        title: null,
+        genres: null,
+        image: null,
+        studio: null,
+        year: null,
+        persons: null
+    };
+
     PopupModel = Backbone.Model.extend({
-        defaults: {
-            id: null,
-            type: null,
-            title: null,
-            genres: null,
-            image: null,
-            studio: null,
-            year: null,
-            persons: null
-        },
+        defaults: oItemDefaults,
         initialize: function(){
         },
         onListItemEdit: function(data){
