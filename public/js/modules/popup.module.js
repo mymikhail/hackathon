@@ -16,7 +16,7 @@
         initialize: function(){
         },
         onListItemEdit: function(data){
-            debugger;
+            console.log(data);
         }
     });
 

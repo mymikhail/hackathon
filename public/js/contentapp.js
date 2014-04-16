@@ -17,6 +17,21 @@
             })
         ;
 
+        var oSearchModel = new SearchModel
+          , oPaginationView = new PaginationView({
+                el: '#pagination',
+                model: oSearchModel
+            })
+          , oQuickSearchView = new QuickSearchView({
+                el: '#quickSearch',
+                model: oSearchModel
+            })
+          , oExtendedSearchView = new ExtendedSearchView({
+                el: '#extendedSearch',
+                model: oSearchModel
+            })
+        ;
+
         appEventHandler = _.extend({}, Backbone.Events)
             .on('list:edit', function(data){
                 oPopupModel.onListItemEdit(data);
@@ -32,10 +47,10 @@
          */
         TabView = Backbone.View.extend({
             events: {
-                'click .tab-link': 'onTablinkHandler',
+                'click .tab-link': 'onTabLinkHandler',
                 'click .list-item-add-link': 'onItemAddLinkHandler'
             },
-            onTablinkHandler: function(e){
+            onTabLinkHandler: function(e){
                 e.preventDefault();
                 $(e.currentTarget).tab('show');
             },

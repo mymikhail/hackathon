@@ -15,6 +15,7 @@
 
     <script src="/js/modules/list.module.js"></script>
     <script src="/js/modules/popup.module.js"></script>
+    <script src="/js/modules/search.module.js"></script>
     <script src="/js/contentapp.js"></script>
 </head>
 <body>
@@ -51,14 +52,18 @@
             <section class="tab-pane active" id="quickSearch">
                 <form class="form-search">
                     <div class="input-append">
-                        <input type="text" class="input-xxlarge search-query" placeholder="умный поиск" title="Введите целиком или часть: название фильма, режиссера, актера и т.д.">
+                        <input name="query" type="text" class="input-xxlarge search-query" placeholder="умный поиск" title="Введите целиком или часть: название фильма, режиссера, актера и т.д.">
                         <button type="submit" class="btn">Найти</button>
                     </div>
                 </form>
 
 
                 <p>
-                    Последние запросы: <a href="#" class="pseudo-link">Тарантино</a>, <a href="#" class="pseudo-link">Человек-паук</a>, <a href="#" class="pseudo-link">Италия 1960-1970</a>, &hellip;
+                    Последние запросы:
+                    <a href="#" class="pseudo-link quick-link">Тарантино</a>,
+                    <a href="#" class="pseudo-link quick-link">Человек-паук</a>,
+                    <a href="#" class="pseudo-link quick-link">Италия 1960-1970</a>,
+                    &hellip;
                 </p>
 
                 <p>
@@ -71,21 +76,21 @@
                 <div class="span6">
                     <form class="form-horizontal">
                         <div class="control-group">
-                            <label class="control-label" for="inputName">Название</label>
+                            <label class="control-label" for="inputTitle">Название</label>
                             <div class="controls">
-                                <input type="text" id="inputName" placeholder="">
+                                <input type="text" id="inputTitle" name="title">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="inputProducer">Режиссёр</label>
                             <div class="controls">
-                                <input type="text" id="inputProducer" placeholder="">
+                                <input type="text" id="inputProducer" name="producer">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="inputActor">Актёры</label>
                             <div class="controls">
-                                <input type="text" id="inputActor" placeholder="">
+                                <input type="text" id="inputActor" name="actor">
                             </div>
                         </div>
                         <div class="control-group">
@@ -135,14 +140,14 @@
                 </tbody>
             </table>
 
-            <div class="pagination">
+            <div class="pagination" id="pagination">
                 <ul>
                     <li><a href="#">Prev</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    <li><a href="#" data-page="1" class="page">1</a></li>
+                    <li><a href="#" data-page="2" class="page">2</a></li>
+                    <li><a href="#" data-page="3" class="page">3</a></li>
+                    <li><a href="#" data-page="4" class="page">4</a></li>
+                    <li><a href="#" data-page="5" class="page">5</a></li>
                     <li><a href="#">Next</a></li>
                 </ul>
             </div>
