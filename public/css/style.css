@@ -1,0 +1,13 @@
+body {
+    padding-top: 20px;
+}
+
+
+a.pseudo-link {
+    border-bottom: 1px dotted;
+    text-decoration: none !important;
+}
+
+.td-list-action {
+    width: 14px;
+}
