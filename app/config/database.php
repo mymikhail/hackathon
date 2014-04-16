@@ -83,6 +83,13 @@ return array(
 			'prefix'   => '',
 		),
 
+		'couchbase' => array(			
+			'host'     => '10.20.30.95',
+			'port' 	   => '8091',
+			'username' => 'root',
+			'password' => 'sun2902',
+		),
+
 	),
 
 	/*

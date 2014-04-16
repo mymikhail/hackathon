@@ -1,5 +1,6 @@
 <?php
 
+require __DIR__ . '/config/database.php';
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,15 +14,9 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
-});
-
-Route::get('/list/', function()
-{
 	return View::make('list');
 });
 
-Route::get('/edit/', function()
-{
-	return View::make('edit');
-});
+Route::controller('list', 'ListController');
+
+Route::controller('/element/(:element_id?)', 'ElementController');
