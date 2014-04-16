@@ -1,19 +1,51 @@
-/**
- * Created by ypopov on 16.04.14.
- */
-
-
 ;(function($){
     $( function(){
 
-        $('#myTab a').not('[href="#myModal"]').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        })
+        var oListModel = new ListModel
+          , oListView = new ListView({
+                el: '#listContainer',
+                model: oListModel
+            })
+        ;
+//        oListView.listenTo(oListModel, 'change', oListView.render);
 
 
+        var oPopupModel = new PopupModel
+          , oPopupView = new PopupView({
+                el: '#myModal',
+                model: oPopupModel
+            })
+        ;
 
+        appEventHandler = _.extend({}, Backbone.Events)
+            .on('list:edit', function(data){
+                oPopupModel.onListItemEdit(data);
+            })
+            .on('list:add', function(){
+                oPopupView.render();
+            })
+        ;
 
+        /**
+         * Tabs
+         */
+        TabView = Backbone.View.extend({
+            events: {
+                'click .tab-link': 'onTablinkHandler',
+                'click .list-item-add-link': 'onItemAddLinkHandler'
+            },
+            onTablinkHandler: function(e){
+                e.preventDefault();
+                $(e.currentTarget).tab('show');
+            },
+            onItemAddLinkHandler: function(){
+                appEventHandler.trigger('list:add');
+            }
+        });
+
+        var oTabView = new TabView({
+            el: '#myTab'
+        });
 
     } );
-})(jQuery);
+})(jQuery)

@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
 
-    <script src="http://yandex.st/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/js/underscore.min.js"></script>
+    <script src="/js/backbone.min.js"></script>
+
+    <script src="/js/modules/list.module.js"></script>
+    <script src="/js/modules/popup.module.js"></script>
     <script src="/js/contentapp.js"></script>
 </head>
 <body>
@@ -30,13 +36,13 @@
 
         <ul class="nav nav-tabs" id="myTab">
             <li class="active">
-                <a href="#quickSearch">Быстрый поиск</a>
+                <a href="#quickSearch" class="tab-link">Быстрый поиск</a>
             </li>
             <li>
-                <a href="#extendedSearch">Расширенный поиск</a>
+                <a href="#extendedSearch" class="tab-link">Расширенный поиск</a>
             </li>
             <li>
-                <a href="#myModal" data-toggle="modal">Добавить элемент</a>
+                <a href="#myModal" data-toggle="modal" class="list-item-add-link">Добавить элемент</a>
             </li>
         </ul>
 
@@ -122,46 +128,10 @@
                     <th class="td-list-action">&nbsp;</th>
                 </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#myModal" data-toggle="modal">Человек-паук</a></td>
-                        <td></td>
-                        <td>Marvell</td>
-                        <td>2014</td>
-                        <td>США</td>
-                        <td>Вася, Саша, Таня</td>
-                        <td>Тарантино</td>
-                        <td>Тарантино</td>
-                        <td class="td-list-action">
-                            <a href="#" title="Удалить"><i class="icon-remove"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#myModal" data-toggle="modal">Человек-паук 2</a></td>
-                        <td></td>
-                        <td>Marvell</td>
-                        <td>2014</td>
-                        <td>США</td>
-                        <td>Вася, Саша, Таня</td>
-                        <td>Тарантино</td>
-                        <td>Тарантино</td>
-                        <td class="td-list-action">
-                            <a href="#" title="Удалить"><i class="icon-remove"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#myModal" data-toggle="modal">Человек-паук 3</a></td>
-                        <td></td>
-                        <td>Marvell</td>
-                        <td>2014</td>
-                        <td>США</td>
-                        <td>Вася, Саша, Таня</td>
-                        <td>Тарантино</td>
-                        <td>Тарантино</td>
-                        <td class="td-list-action">
-                            <a href="#" title="Удалить"><i class="icon-remove"></i></a>
-                        </td>
-                    </tr>
+                <tbody id="listContainer">
+                <tr>
+                    <td colspan="8">Загрузка данных...</td>
+                </tr>
                 </tbody>
             </table>
 
@@ -187,14 +157,43 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Modal header</h3>
     </div>
-    <div class="modal-body">
-        <p>Форма добавления или редактирования тут</p>
-    </div>
+    <form action="." method="post" enctype="multipart/form-data"  class="form-horizontal modal-body">
+        Загрузка данных...
+    </form>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</button>
         <button class="btn btn-primary">Сохранить</button>
     </div>
 </div>
+
+<script type="text/template" id="listItemTemplate">
+    <% _.each(items, function(item) { %>
+    <tr data-id="<%= item.id %>">
+        <td><a href="#myModal" data-toggle="modal" class="list-item-edit"><%= item.title %></a></td>
+        <td><%= item.image %></td>
+        <td><%= item.studio %></td>
+        <td><%= item.year %></td>
+        <td><%= item.country %></td>
+        <td>
+            <% _.each(item.persons, function(person, i) { %><% if ( i > 0) {%>, <% }; %><%= person.name %><% }); %>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="td-list-action">
+            <a href="#" title="Удалить" class="list-item-remove"><i class="icon-remove"></i></a>
+        </td>
+    </tr>
+    <% }); %>
+</script>
+
+<script type="text/template" id="itemFormTemplate">
+    <div class="control-group">
+        <label class="control-label" for="inputName">Название</label>
+        <div class="controls">
+            <input type="text" id="inputName" placeholder="<%= title %>">
+        </div>
+    </div>
+</script>
 
 </body>
 </html>
