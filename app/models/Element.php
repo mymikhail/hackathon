@@ -7,14 +7,14 @@ class CouchModel
 
 	public function __construct()
 	{
-        $couchbase = array(         
+     /*   $couchbase = array(         
             'host'     => '10.20.30.95',
             'port'     => '8091',
             'username' => 'root',
             'password' => 'sun2902',
             'bucket'   => 'films'
         );
-
+*/
         $couchbase = array(         
             'host'     => '10.20.10.149',
             'port'     => '8091',
@@ -46,10 +46,12 @@ class CouchModel
 			$data['type'] = 'film';
 		}
 
-		return $this->_instance->set(
+		$this->_instance->set(
 			$id, 
 			json_encode($data, JSON_UNESCAPED_UNICODE)
 		);	
+
+		return $id;
 	}
 
 	public function view($design_doc_name, $view_name, $params = array())
