@@ -20,3 +20,5 @@ Route::get('/', function()
 Route::controller('list', 'ListController');
 
 Route::controller('element', 'ElementController');
+
+Route::get('test', 'TestController@index');

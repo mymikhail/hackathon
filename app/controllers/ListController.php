@@ -11,27 +11,12 @@ class ListController extends Controller
     {
         $element = new Element();
     
-
         print_r($page);
         print_r($query);
 
-        
-        $result = $element->view(self::LIST_VIEW, ['limit' => self::LIMIT_ON_PAGE]);
+        $result = $element->view(self::LIST_VIEW, ['limit' => self::LIMIT_ON_PAGE, 'skip' => 20]);
                 
-        $elements = array();
-        
-        foreach($result['rows'] as $row) {
+        echo json_encode($result);
 
-            $doc = $element->get($row['id']);
-
-            if($doc) {
-                $doc = json_decode($doc, true);
-                $elements[] = $doc;
-            }
-        }
-
-
-echo json_encode($elements);
-        
     }
 }
