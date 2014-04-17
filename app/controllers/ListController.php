@@ -55,11 +55,17 @@ class ListController extends Controller
             'hosts' => ['10.20.10.149:9200',]
         ]);
 
-        $searchParams['index'] = 'films';
-        $searchParams['type']  = 'couchbaseDocument';
-        $searchParams['body']['query']['match']['_all'] = $query;
-        $searchParams['body']['size'] = $params['limit'];
-        $searchParams['body']['from'] = $params['skip'];
+        $search = '{"query":{"bool":{"must":[{"query_string":{"default_field":"_all","query":"|query|"}},{"term":{"couchbaseDocument.doc.type":"film"}}]}},"from":|offset|,"size":|limit|}';
+        $search = str_replace('|query|', $query, $search);
+        $search = str_replace('|offset|', $params['skip'], $search);
+        $search = str_replace('|limit|', $params['limit'], $search);
+
+        $searchParams = [
+            'index' => 'films',
+            'type' => 'couchbaseDocument',
+            'body' => json_decode($search),
+        ];
+
         $searchResult = $client->search($searchParams);
 
         $doc_ids = array_map(function($result) {
