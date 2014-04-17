@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-		"simplon/db": "1.1.0"
+		"simplon/db": "1.1.0",
+        "elasticsearch/elasticsearch": "~1.0",
+        "j20/php-uuid": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
