@@ -21,20 +21,23 @@
 </head>
 <body>
 
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="#">ContentApp</a>
+            <ul class="nav">
+                <li class="active"><a href="#">Фильмы</a></li>
+                <li><a href="#">Музыка</a></li>
+                <li><a href="#">Книги</a></li>
+                <li><a href="#">Игры</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
     <div class="row-fluid">
-
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand" href="#">ContentApp</a>
-                <ul class="nav">
-                    <li class="active"><a href="#">Фильмы</a></li>
-                    <li><a href="#">Музыка</a></li>
-                    <li><a href="#">Книги</a></li>
-                    <li><a href="#">Игры</a></li>
-                </ul>
-            </div>
-        </div>
 
         <ul class="nav nav-tabs" id="myTab">
             <li class="active">
