@@ -72,14 +72,20 @@
                         <div class="control-group">
                             <div class="controls">
                                 <button type="submit" class="btn">Найти</button>
-                                <button type="button" class="btn">Сохранить фильтр</button>
+
+                                <span class="filter-save-container">
+                                    <span class="input-append">
+                                        <input type="text" class="input-large save-filter-name" placeholder="Название" />
+                                        <button type="button" class="btn save-filter-action">Сохранить</button>
+                                        <button type="button" class="btn save-filter-cancel">Отмена</button>
+                                    </span>
+                                    <button type="button" class="btn save-filter-request">Сохранить фильтр</button>
+                                </span>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="span6">
-                    Сохраненные фильтры: <a href="#" class="pseudo-link">Ранний Тарантино с Умой Турман</a>, <a href="#" class="pseudo-link">Партнерка Tviggle</a>
-                </div>
+                <div class="span6 saved-filters-container"></div>
             </section>
             <!-- /extended search -->
 
@@ -89,22 +95,10 @@
 
         <section id="itemsList">
             <table class="table table-condensed table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Постер</th>
-                    <th>Студия</th>
-                    <th>Год</th>
-                    <th>Страна</th>
-                    <th>Актёры</th>
-                    <th>Продюссер</th>
-                    <th>Режиссер</th>
-                    <th class="td-list-action">&nbsp;</th>
-                </tr>
-                </thead>
+                <thead id="listHeadContainer"></thead>
                 <tbody id="listContainer">
                 <tr>
-                    <td colspan="8">Загрузка данных...</td>
+                    <td>Загрузка данных...</td>
                 </tr>
                 </tbody>
             </table>
@@ -139,6 +133,15 @@
         </div>
     </form>
 </div>
+
+<script type="text/template" id="listHeadTemplate">
+    <tr>
+        <% _.each(fields, function(field) { %>
+        <th><%= field.title %></th>
+        <% }); %>
+        <th class="td-list-action">&nbsp;</th>
+    </tr>
+</script>
 
 <script type="text/template" id="listItemTemplate">
     <% _.each(rows, function(row) { %>
@@ -178,13 +181,20 @@
             <% if('list'==field.type){%>
                 <div>
                     <% _.each(field.value, function(value) { %>
-                        <span class="label" data-id="<%= value.id %>"><%= value.name %> <i class="icon-remove"></i></span>
+                        <span class="label" data-id="<%= value.id %>"><%= value.name %> <i class="icon-remove" title="Удалить"></i></span>
                     <% }); %>
                 </div>
             <% }; %>
         </div>
     </div>
     <% }); %>
+</script>
+
+<script type="text/template" id="savedFiltersTemplate">
+    Сохраненные фильтры:
+        <% _.each(filters, function(filter) { %>
+            <span class="label saved-filter-apply"><%= filter.title %> <i class="icon-remove" title="Удалить"></i></span>
+        <% }); %>
 </script>
 
 </body>

@@ -23,15 +23,20 @@
 
     ListView = Backbone.View.extend({
         initialize: function(){
+            this.renderTableHead();
             this.listenTo(this.model, 'change', this.render);
         },
         events: {
             'click .list-item-edit': 'onListItemEdit',
             'click .list-item-remove': 'onListItemRemove'
         },
+        renderTableHead: function(){
+            var template = _.template($("#listHeadTemplate").html(), {fields: appContent.get('fields')} );
+            this.$el.find('#listHeadContainer').html(template);
+        },
         render: function(model){
             var template = _.template($("#listItemTemplate").html(), {rows: model.get('rows')} );
-            this.$el.html(template);
+            this.$el.find('#listContainer').html(template);
         },
         onListItemEdit: function(e){
             e.preventDefault();

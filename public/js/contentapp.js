@@ -29,7 +29,7 @@
          */
         var oListModel = new ListModel
           , oListView = new ListView({
-                el: '#listContainer',
+                el: '#itemsList',
                 model: oListModel
             })
         ;
