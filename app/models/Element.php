@@ -2,6 +2,8 @@
 
 class CouchModel 
 {
+	const DESIGN_DOC_NAME = "films";
+
 	protected $_instance;
 	protected $prefics_key;
 
@@ -54,10 +56,10 @@ class CouchModel
 		return json_encode(['id' => $id], JSON_UNESCAPED_UNICODE);
 	}
 
-	public function view($design_doc_name, $view_name, $params = array())
+	public function view($view_name, $params = array(), $design_doc_name = self::DESIGN_DOC_NAME)
 	{
 		return $this->_instance->view(
-			$design_doc_name, 
+			$design_doc_name,
 			$view_name, 
 			$params
 		);
@@ -72,20 +74,15 @@ class CouchModel
 	{
 		return $this->prefics_key.J20\Uuid\Uuid::v4();
 	}
+
+	public function getMulti($ids)
+	{
+		return $this->_instance->getMulti($ids);
+	}
 }
 
 
 class Element extends CouchModel
-{
-	const DESIGN_DOC_NAME = "films";
+{	
 	protected $prefics_key = "film::";
-
-	public function view($view_name, $params = array())
-	{
-		return  parent::view(
-			self::DESIGN_DOC_NAME, 
-			$view_name, 
-			$params
-		);
-	}
 }

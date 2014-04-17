@@ -21,4 +21,6 @@ Route::controller('list', 'ListController');
 
 Route::controller('element', 'ElementController');
 
+Route::controller('autocomplite', 'AutocompliteController');
+
 Route::get('test', 'TestController@index');
