@@ -9,15 +9,27 @@ class AutocompliteController extends Controller
 
     public function getGenres()
     {
-        $query= isset($_GET['query']) ? $_GET['query']: '';
+        $query = isset($_GET['query']) && strlen($_GET['query']) > 2 ? $_GET['query']: '';
 
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        $genres =  ["Боевики","Триллеры","Мистика","Детективы","Фантастика","Приключения","Комедии","Драмы","Мюзиклы","Артхаус","Короткометражные","Документальные","Научные","Фильмы для детей","Мультфильмы","Эротика","Музыкальные программы","Образовательные программы","Спорт","Прочее","Аниме","Мелодрамы","Отечественные фильмы","Российские фильмы","Сериалы","Юмор","Ужасы","Военные фильмы","Криминал","Исторические фильмы","Биография","Вестерн","Для взрослых","Игра","Концерт","Новости","Семейный","Ток-шоу","Фильм-нуар","Фэнтези"];
+
+        if ($query) {
+
+            $result = [];
+            foreach ($genres as $key => $genre) {
+                
+                if (preg_match("~$query~iu", $genre, $m)) {
+                    $result[] = $genre;
+                }
+            }
+            
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
+        }
     }
 
 
     public function getPerson()
-    {        
-        
+    {
         $query= isset($_GET['query']) && strlen($_GET['query']) > 2 ? $_GET['query']: '';
 
         if ($query) {
