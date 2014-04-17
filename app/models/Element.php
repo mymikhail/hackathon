@@ -45,7 +45,7 @@ class CouchModel
 			$data['id'] = $id;
 			$data['type'] = 'film';
 		}
-var_dump($data);
+
 		return $this->_instance->set(
 			$id, 
 			json_encode($data, JSON_UNESCAPED_UNICODE)
