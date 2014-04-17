@@ -13,10 +13,21 @@
 
     PopupModel = Backbone.Model.extend({
         defaults: oItemDefaults,
-        initialize: function(){
-        },
-        onListItemEdit: function(data){
-            console.log(data);
+        url: '/element/index/',
+        fetch: function(data){
+            var self = this
+              , url = self.url + data.id
+            ;
+            $.ajax({
+                type: 'get',
+                url: url,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function(json){
+                    console.log(json);
+//                    self.set(json);
+                }
+            });
         }
     });
 

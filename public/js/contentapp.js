@@ -52,7 +52,7 @@
          */
         appEventHandler = _.extend({}, Backbone.Events)
             .on('list:edit', function(data){
-                oPopupModel.onListItemEdit(data);
+                oPopupModel.fetch(data);
             })
             .on('list:add', function(){
                 oPopupView.$el.modal('show');

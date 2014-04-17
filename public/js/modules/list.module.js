@@ -5,8 +5,9 @@
             this.fetch();
         },
         fetch: function(data){
-            var data = data || {};
-            var self = this;
+            var self = this
+              , data = data || {}
+            ;
             $.ajax({
                 type: 'get',
                 url: self.url,
@@ -16,7 +17,7 @@
                 success: function(json){
                     self.set(json);
                 }
-            })
+            });
         }
     });
 
@@ -40,7 +41,18 @@
         onListItemRemove: function(e){
             e.preventDefault();
             if(confirm('Точно удалить?')){
-                $(e.currentTarget).closest('tr').remove();
+                var $row = $(e.currentTarget).closest('tr')
+                  , url = '/element/index/' + $row.data('id')
+                ;
+                $.ajax({
+                    type: 'delete',
+                    url: url,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function(json){
+                        $row.remove();
+                    }
+                });
             }
         }
     });
