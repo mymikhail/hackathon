@@ -46,6 +46,5 @@ class ElementController extends Controller
     public function deleteIndex($element_id = null)
     {
 
-    }
- 
+    } 
 }

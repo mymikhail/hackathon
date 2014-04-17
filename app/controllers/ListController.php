@@ -10,13 +10,17 @@ class ListController extends Controller
     public function getIndex($page = null, $query = null)
     {
         $element = new Element();
-    
-        print_r($page);
-        print_r($query);
 
-        $result = $element->view(self::LIST_VIEW, ['limit' => self::LIMIT_ON_PAGE, 'skip' => 20]);
+        $params = ['limit' => self::LIMIT_ON_PAGE];
+
+        if (isset($_GET['page'])) {
+            $params['skip'] = self::LIMIT_ON_PAGE*$_GET['page'];
+        }
+
+        $query= isset($_GET['query']) ? $_GET['query']: '';
+
+        $result = $element->view(self::LIST_VIEW, $params);
                 
         echo json_encode($result);
-
     }
 }
