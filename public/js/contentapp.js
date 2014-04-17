@@ -76,6 +76,9 @@
             .on('list:update', function(data){
                 oListModel.fetch(data);
             })
+            .on('list:add/edit', function(data){
+                oListView.onListAddEdit(data);
+            })
             .on('list:renderpages', function(data){
                 oPaginationView.render(data);
             })

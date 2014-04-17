@@ -60,6 +60,17 @@
                     }
                 });
             }
+        },
+        onListAddEdit: function(data){
+            var template = _.template($("#listItemTemplate").html(), {rows: [data], fields: appContent.get('fields')} )
+              , $row = this.$el.find('[data-id="' + data.id + '"]')
+            ;
+
+            if ( $row.length ){
+                $row.replaceWith(template);
+            } else {
+                this.$el.find('#listContainer').prepend(template);
+            }
         }
     });
 })(jQuery)

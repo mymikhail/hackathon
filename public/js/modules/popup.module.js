@@ -28,7 +28,8 @@
             });
         },
         save: function(){
-            var id = this.get('id') || null
+            var self = this
+              , id = this.get('id') || null
               , url = id ? this.url + id : this.url
               , type = id? 'put' : 'post'
             ;
@@ -40,11 +41,20 @@
                 dataType: 'json',
 //                contentType: 'application/json; charset=utf-8',
                 success: function(json){
+                    var data = {
+                        id: json.id,
+                        value: $.extend({}, self.attributes )
+                    };
+                    appEventHandler.trigger('list:add/edit', data);
+
+                    if (!id){
+                        self.reset();
+                    }
                 }
             });
         },
         reset: function(){
-            this.set(oItemDefaults);
+            this.clear().set(oItemDefaults);
         }
     });
 
@@ -74,6 +84,10 @@
             delete data.producer;
 
             this.model.set(data, {silent: true}).save();
+
+            if ( this.model.get('id') ){
+                this.$el.modal('hide');
+            }
         },
         render: function(model){
             var fields = $.extend({}, appContent.get('fields'));
