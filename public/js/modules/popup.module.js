@@ -1,6 +1,8 @@
 ;(function($){
 
-    var oItemDefaults = {};
+    var oItemDefaults = {
+        id: null
+    };
 
     PopupModel = Backbone.Model.extend({
         url: '/element/index/',
@@ -26,9 +28,13 @@
             });
         },
         save: function(){
-            var url = this.url + this.get('id');
+            var id = this.get('id') || null
+              , url = id ? this.url + id : this.url
+              , type = id? 'put' : 'post'
+            ;
+
             $.ajax({
-                type: 'post',
+                type: type,
                 url: url,
                 data: this.toJSON(),
                 dataType: 'json',
