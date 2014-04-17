@@ -29,7 +29,6 @@ class ElementController extends Controller
             $element = new Element();
             return $element->set($data);            
         }
-
     }
 
     public function putIndex($element_id = null)

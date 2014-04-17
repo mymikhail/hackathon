@@ -51,7 +51,7 @@ class CouchModel
 			json_encode($data, JSON_UNESCAPED_UNICODE)
 		);	
 
-		return $id;
+		return json_encode(['id' => $id], JSON_UNESCAPED_UNICODE);
 	}
 
 	public function view($design_doc_name, $view_name, $params = array())
