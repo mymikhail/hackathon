@@ -13,6 +13,7 @@
     <script src="/js/underscore.min.js"></script>
     <script src="/js/backbone.min.js"></script>
 
+    <script src="/js/modules/content.module.js"></script>
     <script src="/js/modules/list.module.js"></script>
     <script src="/js/modules/popup.module.js"></script>
     <script src="/js/modules/search.module.js"></script>
@@ -49,6 +50,7 @@
 
         <div class="tab-content">
 
+            <!-- quick search -->
             <section class="tab-pane active" id="quickSearch">
                 <form class="form-search">
                     <div class="input-append">
@@ -58,41 +60,15 @@
                 </form>
 
 
-                <p>
-                    Последние запросы:
-                    <a href="#" class="pseudo-link quick-link">Тарантино</a>,
-                    <a href="#" class="pseudo-link quick-link">Человек-паук</a>,
-                    <a href="#" class="pseudo-link quick-link">Италия 1960-1970</a>,
-                    &hellip;
-                </p>
-
-                <p>
-                    Основые категории?..
-                </p>
+                <div class="quick-link-container"></div>
             </section>
+            <!-- /quick search -->
 
+            <!-- extended search -->
             <section class="tab-pane" id="extendedSearch">
-
                 <div class="span6">
                     <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label" for="inputTitle">Название</label>
-                            <div class="controls">
-                                <input type="text" id="inputTitle" name="title">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="inputProducer">Режиссёр</label>
-                            <div class="controls">
-                                <input type="text" id="inputProducer" name="producer">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="inputActor">Актёры</label>
-                            <div class="controls">
-                                <input type="text" id="inputActor" name="actor">
-                            </div>
-                        </div>
+                        <fieldset class="extended-search-fields-container"></fieldset>
                         <div class="control-group">
                             <div class="controls">
                                 <button type="submit" class="btn">Найти</button>
@@ -104,15 +80,8 @@
                 <div class="span6">
                     Сохраненные фильтры: <a href="#" class="pseudo-link">Ранний Тарантино с Умой Турман</a>, <a href="#" class="pseudo-link">Партнерка Tviggle</a>
                 </div>
-
-
-
-
-
-
-
             </section>
-
+            <!-- /extended search -->
 
             <section class="tab-pane" id="addItem"></section>
 
@@ -172,18 +141,22 @@
 </div>
 
 <script type="text/template" id="listItemTemplate">
-    <% _.each(items, function(item) { %>
-    <tr data-id="<%= item.id %>">
-        <td><a href="#myModal" data-toggle="modal" class="list-item-edit"><%= item.title %></a></td>
-        <td><%= item.image %></td>
-        <td><%= item.studio %></td>
-        <td><%= item.year %></td>
-        <td><%= item.country %></td>
+    <% _.each(rows, function(row) { %>
+    <tr data-id="<%= row.id %>">
+        <td><a href="#myModal" data-toggle="modal" class="list-item-edit"><%= row.value.title %></a></td>
+        <td><%= row.value.image %></td>
+        <td><%= row.value.studio %></td>
+        <td><%= row.value.year %></td>
+        <td><%= row.value.country %></td>
         <td>
-            <% _.each(item.persons, function(person, i) { %><% if ( i > 0) {%>, <% }; %><%= person.name %><% }); %>
+            <% _.each(row.value.actors, function(actor, i) { %><% if ( i > 0) {%>, <% }; %><%= actor.name %><% }); %>
         </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td>
+            <% _.each(row.value.producers, function(producer, i) { %><% if ( i > 0) {%>, <% }; %><%= producer.name %><% }); %>
+        </td>
+        <td>
+            <% _.each(row.value.directors, function(director, i) { %><% if ( i > 0) {%>, <% }; %><%= director.name %><% }); %>
+        </td>
         <td class="td-list-action">
             <a href="#" title="Удалить" class="list-item-remove"><i class="icon-remove"></i></a>
         </td>
@@ -198,6 +171,22 @@
             <input type="text" id="inputName" placeholder="<%= title %>">
         </div>
     </div>
+</script>
+
+<script type="text/template" id="quickLinkTemplate">
+    Последние запросы:
+    <% _.each(items, function(item, i) { %><% if ( i > 0) {%>, <% }; %><a href="#" class="pseudo-link quick-link"><%= item %></a><% }); %>
+</script>
+
+<script type="text/template" id="formRowTemplate">
+    <% _.each(fields, function(field) { %>
+    <div class="control-group">
+        <label class="control-label" for="<%= prefix %>Input<%= field.name %>"><%= field.title %></label>
+        <div class="controls">
+            <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>">
+        </div>
+    </div>
+    <% }); %>
 </script>
 
 </body>

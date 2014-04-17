@@ -1,80 +1,35 @@
 ;(function($){
     ListModel = Backbone.Model.extend({
-        defaults: {
-            items: [
-                {
-                    "id": 1,
-                    "type": "film",
-                    "title": "Запрещено к показу",
-                    "genres": [
-                        "Драмы",
-                        "Артхаус",
-                        "Эротика"
-                    ],
-                    "image": "2310642",
-                    "studio": "test",
-                    "year": "2006",
-                    "persons": [
-                        {
-                            "type": "films_actor",
-                            "name": "Аугуст",
-                            "image_id": null,
-                            "id": ""
-                        },
-                        {
-                            "type": "films_actor",
-                            "name": "Кацуми",
-                            "image_id": null,
-                            "id": ""
-                        },
-                        {
-                            "type": "films_actor",
-                            "name": "Жасмин Бирн",
-                            "image_id": null,
-                            "id": ""
-                        },
-                        {
-                            "type": "films_actor",
-                            "name": "Нэнси Ви",
-                            "image_id": null,
-                            "id": ""
-                        },
-                        {
-                            "type": "films_actor",
-                            "name": "Джон Джон",
-                            "image_id": null,
-                            "id": ""
-                        },
-                        {
-                            "type": "films_actor",
-                            "name": "Диллан Лорен",
-                            "image_id": null,
-                            "id": ""
-                        }
-                    ]
-                },
-                {
-                    "id": 2,
-                    "title": "Человек-паук",
-                    "image": "2310642",
-                    "year": "2012"
-                },
-            ]
-        },
+        url: '/list/index/',
         initialize: function(){
+            this.fetch();
+        },
+        fetch: function(data){
+            var data = data || {};
+            var self = this;
+            $.ajax({
+                type: 'get',
+                url: self.url,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function(json){
+                    self.set(json);
+                }
+            })
         }
     });
 
     ListView = Backbone.View.extend({
         initialize: function(){
-            this.render();
+//            this.render();
         },
         events: {
             'click .list-item-edit': 'onListItemEdit',
             'click .list-item-remove': 'onListItemRemove'
         },
-        render: function(){
-            var template = _.template($("#listItemTemplate").html(), {items: this.model.get('items')} );
+        render: function(model){
+            var template = _.template($("#listItemTemplate").html(), {rows: model.get('rows')} );
             this.$el.html(template);
         },
         onListItemEdit: function(e){
@@ -84,7 +39,9 @@
         },
         onListItemRemove: function(e){
             e.preventDefault();
-            $(e.currentTarget).closest('tr').remove();
+            if(confirm('Точно удалить?')){
+                $(e.currentTarget).closest('tr').remove();
+            }
         }
     });
 })(jQuery)

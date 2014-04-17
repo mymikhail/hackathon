@@ -1,6 +1,16 @@
 ;(function($){
     $( function(){
 
+        /**
+         * Global content model
+         */
+        appContent = new ContentTypeModel({
+            type: 'film'
+        });
+
+        /**
+         * Items list
+         */
         var oListModel = new ListModel
           , oListView = new ListView({
                 el: '#listContainer',
@@ -9,7 +19,9 @@
         ;
         oListView.listenTo(oListModel, 'change', oListView.render);
 
-
+        /**
+         * Item edd/edit
+         */
         var oPopupModel = new PopupModel
           , oPopupView = new PopupView({
                 el: '#myModal',
@@ -17,6 +29,9 @@
             })
         ;
 
+        /**
+         * Search query controller
+         */
         var oSearchModel = new SearchModel
           , oPaginationView = new PaginationView({
                 el: '#pagination',
@@ -32,6 +47,9 @@
             })
         ;
 
+        /**
+         * Global event handler
+         */
         appEventHandler = _.extend({}, Backbone.Events)
             .on('list:edit', function(data){
                 oPopupModel.onListItemEdit(data);
@@ -39,6 +57,9 @@
             .on('list:add', function(){
                 oPopupView.$el.modal('show');
                 oPopupView.render();
+            })
+            .on('list:update', function(data){
+                oListModel.fetch(data);
             })
         ;
 

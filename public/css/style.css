@@ -11,3 +11,13 @@ a.pseudo-link {
 .td-list-action {
     width: 14px;
 }
+
+form {
+    margin: 0;
+}
+.quick-link-container {
+    margin: 20px 0 0;
+}
+#itemsList {
+    margin: 40px 0 0;
+}
