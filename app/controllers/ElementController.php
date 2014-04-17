@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../models/Element.php';
+
 class ElementController extends Controller 
 {
 
@@ -14,7 +16,7 @@ class ElementController extends Controller
             if($result = $element->get($element_id)) {
                 echo $result;
             } else {
-                echo json_encode(['status' => 'not found']);
+                echo json_encode(['status' => 'not found'], JSON_UNESCAPED_UNICODE);
             }
         }
     }
@@ -31,7 +33,7 @@ class ElementController extends Controller
             'year' => '2003',
         ];
         
-        $result = $element->set($element_id, json_encode($document));
+        $result = $element->set($element_id, json_encode($document, JSON_UNESCAPED_UNICODE));
         echo '<pre>';
         var_dump($result);
         echo '</pre>';
@@ -45,6 +47,9 @@ class ElementController extends Controller
 
     public function deleteIndex($element_id = null)
     {
-
+        if (isset($element_id)) {
+            $element = new Element();
+            $element->delete($element_id);
+        }
     } 
 }

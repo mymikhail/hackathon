@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../models/Element.php';
 
 class ListController extends Controller 
 {
@@ -9,18 +10,17 @@ class ListController extends Controller
 
     public function getIndex($page = null, $query = null)
     {
-        $element = new Element();
-
         $params = ['limit' => self::LIMIT_ON_PAGE];
 
-        if (isset($_GET['page'])) {
-            $params['skip'] = self::LIMIT_ON_PAGE*$_GET['page'];
+        if (isset($_GET['page']) && (int) $_GET['page'] > 0) {
+            $params['skip'] = self::LIMIT_ON_PAGE * $_GET['page'];
         }
 
         $query= isset($_GET['query']) ? $_GET['query']: '';
 
+        $element = new Element();
         $result = $element->view(self::LIST_VIEW, $params);
-                
-        echo json_encode($result);
+    
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 }

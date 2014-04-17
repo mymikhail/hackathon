@@ -1,6 +1,6 @@
 <?php
 
-class Element extends Eloquent
+class Element
 {
 	const DESIGN_DOC_NAME = "films";
 
@@ -32,11 +32,16 @@ class Element extends Eloquent
 
 	public function set($element_id, $data)
 	{
-		
+		return $this->_instance->set($element_id, $data);	
 	}
 
 	public function view($view_name, $params = array(), $design_doc_name = self::DESIGN_DOC_NAME)
 	{
 		return $this->_instance->view($design_doc_name, $view_name, $params);
+	}
+
+	public function delete($element_id)
+	{
+		return $this->_instance->delete($element_id);
 	}
 }
