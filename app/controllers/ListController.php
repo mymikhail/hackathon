@@ -2,36 +2,36 @@
 
 class ListController extends Controller 
 {
+    const LIST_VIEW = 'films_all';
+    const LIMIT_ON_PAGE = 10;
 
-    public $restful = true;
+    public $restful = true;    
 
-    public function getIndex($page = null)
+    public function getIndex($page = null, $query = null)
     {
+        $element = new Element();
+    
 
-        echo 'sdfsdf'; die;
-        $couchbase = array(         
-            'host'     => '10.20.30.95',
-            'port'     => '8091',
-            'username' => 'root',
-            'password' => 'sun2902',
-            'bucket'   => 'films'
-        );
+        print_r($page);
+        print_r($query);
 
-        $instance = \Simplon\Db\DbInstance::Couchbase(
-            $couchbase['host'],
-            $couchbase['port'], 
-            $couchbase['username'],
-            $couchbase['password'], 
-            $couchbase['bucket']
-        );
+        
+        $result = $element->view(self::LIST_VIEW, ['limit' => self::LIMIT_ON_PAGE]);
+                
+        $elements = array();
+        
+        foreach($result['rows'] as $row) {
 
-        $manager = new \Simplon\Db\CouchbaseManager($instance);
-        $elementCouchDao = new ElementCouchDao($manager);
+            $doc = $element->get($row['id']);
 
-        // fetch
-        $result = $elementCouchDao->fetch('tino');
-        echo '<pre>';
-        var_dump($result);
-        echo '</pre>';
+            if($doc) {
+                $doc = json_decode($doc, true);
+                $elements[] = $doc;
+            }
+        }
+
+
+echo json_encode($elements);
+        
     }
 }

@@ -1,59 +1,42 @@
 <?php
 
-	class ElementCouchDao extends \Simplon\Db\Abstracts\DAO\AbstractCouchDAO
-    {
-        const ID_REFERENCE = 'id';
+class Element extends Eloquent
+{
+	const DESIGN_DOC_NAME = "films";
 
-        const FIELD_ID = 's:id';
-        const FIELD_USERNAME = 's:username';
-        const FIELD_CREATED = 's:created';
-        const FIELD_UPDATED = 's:updated';
+	protected $_instance;
 
-        public function setId($value)
-        {
-            $this->_setByKey(UserCouchDao::FIELD_ID, $value);
+	public function __construct()
+	{
+        $couchbase = array(         
+            'host'     => '10.20.30.95',
+            'port'     => '8091',
+            'username' => 'root',
+            'password' => 'sun2902',
+            'bucket'   => 'films'
+        );
 
-            return $this;
-        }
+        $this->_instance = new Couchbase(
+            $couchbase['host'].":".$couchbase['port'],
+            $couchbase['username'],
+            $couchbase['password'], 
+            $couchbase['bucket'],
+            true
+        );        
+	}
 
-        public function getId()
-        {
-            return $this->_getByKey(UserCouchDao::FIELD_ID);
-        }
+	public function get($element_id)
+	{
+		return isset($element_id) ? $this->_instance->get($element_id) : null;
+	}
 
-        public function setUsername($value)
-        {
-            $this->_setByKey(UserCouchDao::FIELD_USERNAME, $value);
+	public function set($element_id, $data)
+	{
+		
+	}
 
-            return $this;
-        }
-
-        public function getUsername()
-        {
-            return $this->_getByKey(UserCouchDao::FIELD_USERNAME);
-        }
-
-        public function setCreated($value)
-        {
-            $this->_setByKey(UserCouchDao::FIELD_CREATED, $value);
-
-            return $this;
-        }
-
-        public function getCreated()
-        {
-            return $this->_getByKey(UserCouchDao::FIELD_CREATED);
-        }
-
-        public function setUpdated($value)
-        {
-            $this->_setByKey(UserCouchDao::FIELD_UPDATED, $value);
-
-            return $this;
-        }
-
-        public function getUpdated()
-        {
-            return $this->_getByKey(UserCouchDao::FIELD_UPDATED);
-        }
-    }
+	public function view($view_name, $params = array(), $design_doc_name = self::DESIGN_DOC_NAME)
+	{
+		return $this->_instance->view($design_doc_name, $view_name, $params);
+	}
+}

@@ -19,4 +19,4 @@ Route::get('/', function()
 
 Route::controller('list', 'ListController');
 
-Route::controller('/element/(:element_id?)', 'ElementController');
+Route::controller('element', 'ElementController');
