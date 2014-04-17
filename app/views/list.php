@@ -127,17 +127,17 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Modal header</h3>
-    </div>
-    <form action="." method="post" enctype="multipart/form-data"  class="form-horizontal modal-body">
-        Загрузка данных...
+<!--    <div class="modal-header">-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+<!--        <h3 id="myModalLabel">Modal header</h3>-->
+<!--    </div>-->
+    <form action="." method="post" enctype="multipart/form-data"  class="form-horizontal">
+        <fieldset class="extended-search-fields-container modal-body">Загрузка данных...</fieldset>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true" type="button">Закрыть</button>
+            <button class="btn btn-primary" type="submit">Сохранить</button>
+        </div>
     </form>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</button>
-        <button class="btn btn-primary">Сохранить</button>
-    </div>
 </div>
 
 <script type="text/template" id="listItemTemplate">
@@ -164,15 +164,6 @@
     <% }); %>
 </script>
 
-<script type="text/template" id="itemFormTemplate">
-    <div class="control-group">
-        <label class="control-label" for="inputName">Название</label>
-        <div class="controls">
-            <input type="text" id="inputName" placeholder="<%= title %>">
-        </div>
-    </div>
-</script>
-
 <script type="text/template" id="quickLinkTemplate">
     Последние запросы:
     <% _.each(items, function(item, i) { %><% if ( i > 0) {%>, <% }; %><a href="#" class="pseudo-link quick-link"><%= item %></a><% }); %>
@@ -183,7 +174,14 @@
     <div class="control-group">
         <label class="control-label" for="<%= prefix %>Input<%= field.name %>"><%= field.title %></label>
         <div class="controls">
-            <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>">
+            <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>" value="<% if('text'==field.type){%><%= field.value %><% }; %>">
+            <% if('list'==field.type){%>
+                <div>
+                    <% _.each(field.value, function(value) { %>
+                        <span class="label" data-id="<%= value.id %>"><%= value.name %> <i class="icon-remove"></i></span>
+                    <% }); %>
+                </div>
+            <% }; %>
         </div>
     </div>
     <% }); %>

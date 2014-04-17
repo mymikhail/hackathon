@@ -1,21 +1,5 @@
 ;(function($){
 
-    $.fn.serializeObject = function(){
-        var o = {};
-        var a = this.serializeArray();
-        $.each(a, function() {
-            if (o[this.name]) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
-    };
-
     var oSearchDefaults = {
         page: 1,
         query: ''
@@ -90,9 +74,7 @@
             'submit form': 'onFormSubmitHandler'
         },
         render: function(){
-            var data = appContent.get('fields');
-            data.prefix = 'extendedSearch';
-            var template = _.template($("#formRowTemplate").html(), data );
+            var template = _.template($("#formRowTemplate").html(), {fields: appContent.get('fields'), prefix: 'extendedSearchForm'} );
             this.$el.find('.extended-search-fields-container').html(template);
         },
         onFormSubmitHandler: function(e){

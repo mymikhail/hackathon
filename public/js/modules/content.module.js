@@ -5,27 +5,43 @@
             fields: [
                 {
                     name: 'title',
-                    title: 'Название'
+                    title: 'Название',
+                    type: 'text'
                 },
                 {
                     name: 'genres',
-                    title: 'Жанры'
+                    title: 'Жанры',
+                    type: 'list'
                 },
                 {
                     name: 'image',
-                    title: 'Постер'
+                    title: 'Постер',
+                    type: 'file'
                 },
                 {
                     name: 'studio',
-                    title: 'Студия'
+                    title: 'Студия',
+                    type: 'text'
                 },
                 {
                     name: 'year',
-                    title: 'Год'
+                    title: 'Год',
+                    type: 'text'
                 },
                 {
-                    name: 'persons',
-                    title: 'Персоны'
+                    name: 'actors',
+                    title: 'Актеры',
+                    type: 'list'
+                },
+                {
+                    name: 'directors',
+                    title: 'Режиссеры',
+                    type: 'list'
+                },
+                {
+                    name: 'producers',
+                    title: 'Продюсеры',
+                    type: 'list'
                 }
             ]
         }
@@ -34,7 +50,7 @@
     ContentTypeModel = Backbone.Model.extend({
         initialize: function(data){
             this.set(data);
-            this.set({fields: oContentTypeMap[data.type]});
+            this.set({fields: oContentTypeMap[data.type].fields});
         }
     });
 

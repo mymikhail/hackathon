@@ -1,4 +1,20 @@
 ;(function($){
+    $.fn.serializeObject = function(){
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
     $( function(){
 
         /**
@@ -17,7 +33,6 @@
                 model: oListModel
             })
         ;
-        oListView.listenTo(oListModel, 'change', oListView.render);
 
         /**
          * Item edd/edit
@@ -55,8 +70,8 @@
                 oPopupModel.fetch(data);
             })
             .on('list:add', function(){
+                oPopupModel.reset();
                 oPopupView.$el.modal('show');
-                oPopupView.render();
             })
             .on('list:update', function(data){
                 oListModel.fetch(data);

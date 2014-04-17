@@ -1,22 +1,18 @@
 ;(function($){
 
-    var oItemDefaults = {
-        id: null,
-        type: null,
-        title: null,
-        genres: null,
-        image: null,
-        studio: null,
-        year: null,
-        persons: null
-    };
+    var oItemDefaults = {};
 
     PopupModel = Backbone.Model.extend({
-        defaults: oItemDefaults,
         url: '/element/index/',
+        initialize: function(){
+            _.each(appContent.get('fields'), function(field, index, list){
+                oItemDefaults[field.name] = null;
+            });
+        },
         fetch: function(data){
             var self = this
-              , url = self.url + data.id
+              , id = data.id
+              , url = self.url + id
             ;
             $.ajax({
                 type: 'get',
@@ -24,10 +20,26 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function(json){
-                    console.log(json);
-//                    self.set(json);
+                    json.id = id;
+                    self.set(json);
                 }
             });
+        },
+        save: function(){
+            var url = this.url + this.get('id');
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: this.toJSON(),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function(json){
+                    debugger;
+                }
+            });
+        },
+        reset: function(){
+            this.set(oItemDefaults);
         }
     });
 
@@ -38,11 +50,33 @@
             this.$el.on('hide', function(){
                 self.$el.find('.modal-body').html('Загрузка данных...');
             });
+
+            this.listenTo(this.model, 'change', this.render);
         },
         events: {
+            'submit form': 'onFormSubmitHandler'
         },
-        render: function(){
-            var template = _.template($("#itemFormTemplate").html(), this.model.toJSON() );
+        onFormSubmitHandler: function(e){
+            e.preventDefault();
+            var data = $(e.currentTarget).serializeObject();
+
+            /**
+             * TODO fix this )
+             */
+            delete data.genres;
+            delete data.actors;
+            delete data.directors;
+            delete data.producer;
+
+            this.model.set(data, {silent: true}).save();
+        },
+        render: function(model){
+            var fields = $.extend({}, appContent.get('fields'));
+            _.each(fields, function(field){
+                field.value = model.get(field.name);
+            });
+
+            var template = _.template($("#formRowTemplate").html(), {fields: appContent.get('fields'), prefix: 'popupForm'} );
             this.$el.find('.modal-body').html(template);
         }
     });

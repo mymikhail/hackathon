@@ -23,7 +23,7 @@
 
     ListView = Backbone.View.extend({
         initialize: function(){
-//            this.render();
+            this.listenTo(this.model, 'change', this.render);
         },
         events: {
             'click .list-item-edit': 'onListItemEdit',
