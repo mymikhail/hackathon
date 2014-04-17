@@ -20,7 +20,7 @@
                 type: 'get',
                 url: url,
                 dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
+//                contentType: 'application/json; charset=utf-8',
                 success: function(json){
                     json.id = id;
                     self.set(json);
@@ -38,9 +38,8 @@
                 url: url,
                 data: this.toJSON(),
                 dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
+//                contentType: 'application/json; charset=utf-8',
                 success: function(json){
-                    debugger;
                 }
             });
         },
