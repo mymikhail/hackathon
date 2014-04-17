@@ -15,13 +15,15 @@ class ListController extends Controller
 
         if (!$query) {
             $result = $this->getFromCbView([
-                'limit' => self::LIMIT_ON_PAGE,
-                'skip' => self::LIMIT_ON_PAGE * $page,
+                'descending'    => true,
+                'limit'         => self::LIMIT_ON_PAGE,
+                'skip'          => self::LIMIT_ON_PAGE * $page,
             ]);
         } else {
             $result = $this->getFromElastic($query, [
-                'limit' => self::LIMIT_ON_PAGE,
-                'skip' => self::LIMIT_ON_PAGE * $page,
+                'descending'    => true,
+                'limit'         => self::LIMIT_ON_PAGE,
+                'skip'          => self::LIMIT_ON_PAGE * $page,
             ]);
         }
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
