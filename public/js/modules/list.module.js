@@ -15,6 +15,7 @@
                 dataType: 'json',
 //                contentType: 'application/json; charset=utf-8',
                 success: function(json){
+                    appEventHandler.trigger('list:renderpages', {total: json.total_rows || 0})
                     self.set(json);
                 }
             });
@@ -35,7 +36,7 @@
             this.$el.find('#listHeadContainer').html(template);
         },
         render: function(model){
-            var template = _.template($("#listItemTemplate").html(), {rows: model.get('rows')} );
+            var template = _.template($("#listItemTemplate").html(), {rows: model.get('rows'), fields: appContent.get('fields')} );
             this.$el.find('#listContainer').html(template);
         },
         onListItemEdit: function(e){

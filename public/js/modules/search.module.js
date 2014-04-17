@@ -14,6 +14,7 @@
         }
     });
 
+    var ITEMS_PER_PAGE = 10;
     PaginationView = Backbone.View.extend({
         events: {
             'click .page': 'onPageClickHandler'
@@ -22,6 +23,15 @@
             e.preventDefault();
             var data = $(e.currentTarget).data();
             this.model.set(data);
+        },
+        render: function(data){
+            var template = ''
+              , total = data.total
+            ;
+            if (total > 0){
+                template = _.template($("#paginationTemplate").html(), {total: total, current: this.model.get('page'), pagecount: Math.min(10, Math.ceil(total/ITEMS_PER_PAGE))} );
+            }
+            this.$el.html(template);
         }
     });
 

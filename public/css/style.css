@@ -28,3 +28,13 @@ form {
 
 .label {cursor: pointer;}
 .label .icon-remove {margin-left: 7px;}
+
+
+.pagination-total {
+    display: inline-block;
+    margin-left: 7px;
+    padding: 5px 0;
+    vertical-align: top;
+    font-size: 12px;
+    line-height: 20px;
+}

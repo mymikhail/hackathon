@@ -76,6 +76,9 @@
             .on('list:update', function(data){
                 oListModel.fetch(data);
             })
+            .on('list:renderpages', function(data){
+                oPaginationView.render(data);
+            })
         ;
 
         /**

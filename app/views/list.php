@@ -103,17 +103,7 @@
                 </tbody>
             </table>
 
-            <div class="pagination" id="pagination">
-                <ul>
-                    <li><a href="#">Prev</a></li>
-                    <li><a href="#" data-page="1" class="page">1</a></li>
-                    <li><a href="#" data-page="2" class="page">2</a></li>
-                    <li><a href="#" data-page="3" class="page">3</a></li>
-                    <li><a href="#" data-page="4" class="page">4</a></li>
-                    <li><a href="#" data-page="5" class="page">5</a></li>
-                    <li><a href="#">Next</a></li>
-                </ul>
-            </div>
+            <div class="pagination" id="pagination"></div>
         </section>
 
     </div>
@@ -146,20 +136,17 @@
 <script type="text/template" id="listItemTemplate">
     <% _.each(rows, function(row) { %>
     <tr data-id="<%= row.id %>">
-        <td><a href="#myModal" data-toggle="modal" class="list-item-edit"><%= row.value.title %></a></td>
-        <td><%= row.value.image %></td>
-        <td><%= row.value.studio %></td>
-        <td><%= row.value.year %></td>
-        <td><%= row.value.country %></td>
-        <td>
-            <% _.each(row.value.actors, function(actor, i) { %><% if ( i > 0) {%>, <% }; %><%= actor.name %><% }); %>
-        </td>
-        <td>
-            <% _.each(row.value.producers, function(producer, i) { %><% if ( i > 0) {%>, <% }; %><%= producer.name %><% }); %>
-        </td>
-        <td>
-            <% _.each(row.value.directors, function(director, i) { %><% if ( i > 0) {%>, <% }; %><%= director.name %><% }); %>
-        </td>
+        <% _.each(fields, function(field) { %>
+			<td>
+                <% if(field.type=='text' || field.type=='file'){%>
+                    <% if(field.name=='title'){%><a href="#myModal" data-toggle="modal" class="list-item-edit"><% }; %>
+                    <%= row.value[field.name] %>
+                    <% if(field.name=='title'){%></a><% }; %>
+				<% } else if (field.type='list'){ %>
+				    <% _.each(row.value[field.name], function(item, i) { %><% if ( i > 0) {%>, <% }; %><%= item.name %><% }); %>
+				<% }; %>
+			</td>
+        <% }); %>
         <td class="td-list-action">
             <a href="#" title="Удалить" class="list-item-remove"><i class="icon-remove"></i></a>
         </td>
@@ -195,6 +182,20 @@
         <% _.each(filters, function(filter) { %>
             <span class="label saved-filter-apply"><%= filter.title %> <i class="icon-remove" title="Удалить"></i></span>
         <% }); %>
+</script>
+
+<script type="text/template" id="paginationTemplate">
+    <ul>
+        <% for(var i = 1;i<=pagecount;i++){%>
+            <li <% if (i==current){ %>class="active"<%}%>><a href="#" data-page="<%= i %>" class="page"><%= i %></a></li>
+        <% }%>
+    </ul>
+
+    <span class="pagination-total">Всего <%= total %> элементов.
+    <% if (total>100){%>
+        Показаны первые 100.
+    <% }%>
+    </span>
 </script>
 
 </body>
