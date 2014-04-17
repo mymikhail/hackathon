@@ -8,7 +8,7 @@
 		"simplon/db": "1.1.0",
         "elasticsearch/elasticsearch": "~1.0",
         "j20/php-uuid": "dev-master",
-        "danielkraaij/couchbase-php-stub": "dev-master"
+        "danielkraaij/couchbase-php-stub": "dev-master#3be0762373caa0b6887392b1df46a56b6b89314f"
 	},
 	"autoload": {
 		"classmap": [
