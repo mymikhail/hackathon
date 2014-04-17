@@ -179,8 +179,8 @@ class ListController extends Controller
                         'must' => $must,
                     ],
                 ],
-                'from' => 0,
-                'size' => 10,
+                'from' => $params['skip'],
+                'size' => $params['limit'],
             ],
         ];
 
