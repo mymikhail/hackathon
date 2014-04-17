@@ -62,6 +62,7 @@
             }
         },
         onListAddEdit: function(data){
+            console.log(data);
             var template = _.template($("#listItemTemplate").html(), {rows: [data], fields: appContent.get('fields')} )
               , $row = this.$el.find('[data-id="' + data.id + '"]')
             ;

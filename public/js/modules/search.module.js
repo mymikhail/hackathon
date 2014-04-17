@@ -86,14 +86,18 @@
             'click .save-filter-request': 'onSaveFilterRequestHandler',
             'click .save-filter-cancel': 'onSaveFilterCancelHandler',
             'click .save-filter-action': 'onSaveFilterActionHandler',
-            'click .saved-filter-apply': 'onSavedFilterApplyHandler'
+            'click .saved-filter-apply': 'onSavedFilterApplyHandler',
+            'click .saved-filter-remove': 'onSavedFilterRemoveHandler'
         },
         render: function(){
             var template = _.template($("#formRowTemplate").html(), {fields: appContent.get('fields'), prefix: 'extendedSearchForm'} );
             this.$el.find('.extended-search-fields-container').html(template);
         },
+        getSavedFilters: function(){
+            return JSON.parse(localStorage.getItem('savedFilters')) || [];
+        },
         renderSavedFilters: function(){
-            var a = JSON.parse(localStorage.getItem('savedFilters')) || []
+            var a = this.getSavedFilters()
                 , template = ''
             ;
             if (a.length){
@@ -119,7 +123,7 @@
             e.preventDefault();
             var title = $.trim( this.$el.find('.save-filter-name').val() )
               , data = this.$el.find('form').serializeObject()
-              , a = JSON.parse( localStorage.getItem('savedFilters') ) || []
+              , a = this.getSavedFilters()
             ;
 
             a.push({title: title, data: data});
@@ -131,11 +135,10 @@
         },
         onSavedFilterApplyHandler: function(e){
             var title = $.trim( $(e.currentTarget).text() )
-              , filters = JSON.parse(localStorage.getItem('savedFilters')) || []
               , data = {}
             ;
 
-            _.each(filters, function(filter){
+            _.each(this.getSavedFilters(), function(filter){
                 if (filter.title==title){
                     data=filter.data;
                 }
@@ -144,6 +147,20 @@
             _.each(data, function(value, field){
                $('#extendedSearchFormInput' + field).val(value);
             });
+        },
+        onSavedFilterRemoveHandler: function(e){
+            e.preventDefault();
+            var title = $(e.currentTarget).data('title')
+              , a = []
+            ;
+            $(e.currentTarget).parent().remove();
+
+            _.each(this.getSavedFilters(), function(filter){
+                if (filter.title!=title){
+                    a.push(filter);
+                }
+            });
+            localStorage.setItem('savedFilters', JSON.stringify(a));
         }
     });
 })(jQuery)
