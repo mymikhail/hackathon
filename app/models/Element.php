@@ -12,7 +12,9 @@ class Element extends Hackaton\Couchbase
             $error['errors'] = ['title' => 'required'];
             return $error;            
         } else {
-        	return parent::set($data, $id);	
+        	$id = parent::set($data, $id);	
+
+        	return ['id' => $id];
         }    	
     }
 

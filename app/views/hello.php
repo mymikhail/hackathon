@@ -1,41 +1,47 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Laravel PHP Framework</title>
-	<style>
-		@import url(//fonts.googleapis.com/css?family=Lato:700);
+    <meta charset="UTF-8">
+    <title>ContentApp</title>
 
-		body {
-			margin:0;
-			font-family:'Lato', sans-serif;
-			text-align:center;
-			color: #999;
-		}
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 
-		.welcome {
-			width: 300px;
-			height: 200px;
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			margin-left: -150px;
-			margin-top: -100px;
-		}
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
-		a, a:visited {
-			text-decoration:none;
-		}
+    <script src="/js/underscore.min.js"></script>
+    <script src="/js/backbone.min.js"></script>
 
-		h1 {
-			font-size: 32px;
-			margin: 16px 0 0 0;
-		}
-	</style>
+<!--    <link rel="stylesheet" href="/css/jquery.autocomplete.css"/>-->
+<!--    <script src="/js/jquery.autocomplete.min.js"></script>-->
+
+    <script src="/js/modules/content.module.js"></script>
+    <script src="/js/modules/popup.module.js"></script>
+    <script src="/js/modules/search.module.js"></script>
 </head>
 <body>
+
 	<div class="welcome">		
-		<h1><a href="/list/">Это наш  nackaton!!!!)))</a></h1>
+		    <form class="form-horizontal" action="/" method="get">
+			    <div class="control-group">
+			    <label class="control-label" for="inputLogin">Login</label>
+			    <div class="controls">
+			    <input type="text" id="inputLogin" name="Login" placeholder="Login">
+			    </div>
+			    </div>
+			    <div class="control-group">
+			    <label class="control-label" for="inputPassword">Password</label>
+			    <div class="controls">
+			    <input type="password" id="inputPassword" name="Password" placeholder="Password">
+			    </div>
+			    </div>
+			    <div class="control-group">
+			    <div class="controls">
+			    <button type="submit" class="btn">Sign in</button>
+			    </div>
+			    </div>
+			</form>
 	</div>
 </body>
 </html>
