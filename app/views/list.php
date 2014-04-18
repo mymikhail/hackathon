@@ -145,9 +145,7 @@
         <% _.each(fields, function(field) { %>
 			<td>
                 <% if(field.type=='text' || field.type=='file'){%>
-                    <% if(field.name=='title'){%><a href="#myModal" data-toggle="modal" class="list-item-edit"><% }; %>
-                    <%= row.value[field.name] %>
-                    <% if(field.name=='title'){%></a> <a href="/element/index/<%= row.id %>" target="_blank">json</a><% }; %>
+                    <% if(field.name=='title'){%><a href="#myModal" data-toggle="modal" class="list-item-edit"><% }; %><%= row.value[field.name] %><% if(field.name=='title'){%></a> <a href="/element/index/<%= row.id %>" target="_blank" title="Экспорт в JSON"><i class="icon-share"></i></a><% }; %>
 				<% } else if (field.type='list'){ %>
 				    <% _.each(row.value[field.name], function(item, i) { %><% if ( i > 0) {%>, <% }; %><%= item.name %><% }); %>
 				<% }; %>
@@ -167,10 +165,11 @@
 
 <script type="text/template" id="formRowTemplate">
     <% _.each(fields, function(field) { %>
+    <% if('popupForm'!=prefix && 'file'==field.type){return;}; %>
     <div class="control-group">
         <label class="control-label" for="<%= prefix %>Input<%= field.name %>"><%= field.title %></label>
         <div class="controls">
-            <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>" value="<% if('text'==field.type){%><%= field.value %><% }; %>">
+            <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>" value="<% if('text'==field.type){%><%= field.value %><% }; %>" <% if('popupForm'==prefix && field.required){%>required="true"<% }; %>>
             <% if('list'==field.type){%>
                 <div class="list-value-container">
                     <% _.each(field.value, function(value) { %>
@@ -191,11 +190,13 @@
 </script>
 
 <script type="text/template" id="paginationTemplate">
+    <% if (pagecount>1){%>
     <ul>
         <% for(var i = 1;i<=pagecount;i++){%>
             <li <% if (i==current){ %>class="active"<%}%>><a href="#" data-page="<%= i %>" class="page"><%= i %></a></li>
         <% }%>
     </ul>
+    <%}%>
 
     <span class="pagination-total">Всего <%= total %> элементов.
     <% if (total>100){%>

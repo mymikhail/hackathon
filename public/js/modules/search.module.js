@@ -35,6 +35,10 @@
         }
     });
 
+
+    function _htmlEncode(value){
+        return $('<div/>').text(value).html();
+    }
     QuickSearchView =  Backbone.View.extend({
         initialize: function(){
             this.aQuickLink = []
@@ -52,7 +56,7 @@
             this.model.clear({silent: true}).set(data);
 
             if (-1==$.inArray(data.query, this.aQuickLink)){
-                this.aQuickLink.unshift(data.query);
+                this.aQuickLink.unshift(_htmlEncode(data.query));
                 this.renderQuickLink();
             }
         },
@@ -126,7 +130,7 @@
               , a = this.getSavedFilters()
             ;
 
-            a.push({title: title, data: data});
+            a.push({title: _htmlEncode(title), data: data});
             localStorage.setItem('savedFilters', JSON.stringify(a));
             this.renderSavedFilters();
 

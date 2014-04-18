@@ -6,7 +6,8 @@
                 {
                     name: 'title',
                     title: 'Название',
-                    type: 'text'
+                    type: 'text',
+                    required: true
                 },
 //                {
 //                    name: 'genres',
