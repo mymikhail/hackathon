@@ -69,15 +69,14 @@
             this.listenTo(this.model, 'change', this.render);
         },
         events: {
-            'submit form': 'onFormSubmitHandler'
+            'submit form': 'onFormSubmitHandler',
+            'click .list-value-remove': 'onListValueRemoveHandler'
         },
         onFormSubmitHandler: function(e){
             e.preventDefault();
             var data = $(e.currentTarget).serializeObject();
 
-            /**
-             * TODO fix this )
-             */
+            /* TODO удалять динамически по типу поля */
             delete data.genres;
             delete data.actors;
             delete data.directors;
@@ -89,6 +88,19 @@
                 this.$el.modal('hide');
             }
         },
+        onListValueRemoveHandler: function(e){
+            e.preventDefault();
+            var data = $(e.currentTarget).data()
+              , a = []
+            ;
+            $(e.currentTarget).parent().remove();
+            _.each(this.model.get(data.attribute), function(attribute){
+                if (attribute.id!=data.id){
+                    a.push(attribute);
+                }
+            });
+            this.model.set(data.attribute, a, {silent: true});
+        },
         render: function(model){
             var fields = $.extend({}, appContent.get('fields'));
             _.each(fields, function(field){
@@ -97,6 +109,12 @@
 
             var template = _.template($("#formRowTemplate").html(), {fields: appContent.get('fields'), prefix: 'popupForm'} );
             this.$el.find('.modal-body').html(template);
+
+//            $('#popupFormInputactors').autocomplete("/autocomplite/person/", {
+//                minChars: 3,
+//                queryParamName: 'query',
+//                remoteDataType: 'json'
+//            });
         }
     });
 })(jQuery)

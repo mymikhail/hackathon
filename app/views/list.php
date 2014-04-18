@@ -13,6 +13,9 @@
     <script src="/js/underscore.min.js"></script>
     <script src="/js/backbone.min.js"></script>
 
+<!--    <link rel="stylesheet" href="/css/jquery.autocomplete.css"/>-->
+<!--    <script src="/js/jquery.autocomplete.min.js"></script>-->
+
     <script src="/js/modules/content.module.js"></script>
     <script src="/js/modules/list.module.js"></script>
     <script src="/js/modules/popup.module.js"></script>
@@ -171,7 +174,7 @@
             <% if('list'==field.type){%>
                 <div>
                     <% _.each(field.value, function(value) { %>
-                        <span class="label" data-id="<%= value.id %>"><%= value.name %> <i class="icon-remove" title="Удалить"></i></span>
+                        <span class="label"><%= value.name %> <i class="icon-remove list-value-remove" title="Удалить" data-id="<%= value.id %>" data-attribute="<%= field.name %>"></i></span>
                     <% }); %>
                 </div>
             <% }; %>
@@ -182,9 +185,9 @@
 
 <script type="text/template" id="savedFiltersTemplate">
     Сохраненные фильтры:
-        <% _.each(filters, function(filter) { %>
-            <span class="label saved-filter-apply"><%= filter.title %> <i class="icon-remove" title="Удалить"></i></span>
-        <% }); %>
+    <% _.each(filters, function(filter) { %>
+        <span class="label saved-filter-apply"><%= filter.title %> <i class="icon-remove saved-filter-remove" title="Удалить" data-title="<%= filter.title %>"></i></span>
+    <% }); %>
 </script>
 
 <script type="text/template" id="paginationTemplate">
