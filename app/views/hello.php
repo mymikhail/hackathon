@@ -25,7 +25,7 @@
 	<div class="welcome">
 			<?php 
 				if (!isset($_SESSION['user']) && !empty($_GET)) {
-					echo "<h3>Пакого пользователя нет!!!</h3>";
+					echo "<h3>Такого пользователя нет!!!</h3>";
 				}
 			?>
 		    <form class="form-horizontal" action="/" method="get">
