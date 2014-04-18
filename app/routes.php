@@ -13,40 +13,37 @@ require_once __DIR__ . '/extentions/Auth.php';
 |
 */
 
-/*
+
 Route::get('/', function()
 {
 	if (!empty($_GET) && $_GET['Login'] && $_GET['Password']) {		
-		$r = Hackaton\Auth::auth($_GET['Login'], $_GET['Password']);
-		if($r)
-			return Redirect::to('view');	
-	} 
+		
+		if(Hackaton\Auth::login($_GET['Login'], $_GET['Password']))
+			return Redirect::to('view');
+	}  elseif (Hackaton\Auth::auth())  {
+		return Redirect::to('view');
+	}
 
 	return View::make('hello');	
 });
 
+Route::get('logout', function()
+{
+	Hackaton\Auth::logout();
+	return Redirect::to('/');
+});
+
+
 
 Route::get('view', function()
 {
-	return View::make('list');
+	if (Hackaton\Auth::auth())
+		return View::make('list');
+	else 
+		return Redirect::to('/');	
 });
 
 
-Route::filter('basic.once', function () {
-  return Auth::onceBasic();
-});
-
-
-Route::get('view', array('before' => 'basic.once', function()
-{
-    return 'You are over 200 years old!';
-}));
-*/
-
-Route::get('/', function()
-{
-	return View::make('list');
-});
 
 Route::controller('list', 'ListController');
 

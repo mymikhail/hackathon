@@ -34,6 +34,8 @@
                 <li><a href="#">Музыка</a></li>
                 <li><a href="#">Книги</a></li>
                 <li><a href="#">Игры</a></li>
+
+                <li><a href="/logout">Выход</a></li>
             </ul>
         </div>
     </div>
