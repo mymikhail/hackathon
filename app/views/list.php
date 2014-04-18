@@ -13,8 +13,8 @@
     <script src="/js/underscore.min.js"></script>
     <script src="/js/backbone.min.js"></script>
 
-<!--    <link rel="stylesheet" href="/css/jquery.autocomplete.css"/>-->
-<!--    <script src="/js/jquery.autocomplete.min.js"></script>-->
+    <link rel="stylesheet" href="/css/jquery.autocomplete.css"/>
+    <script src="/js/jquery.autocomplete.js"></script>
 
     <script src="/js/modules/content.module.js"></script>
     <script src="/js/modules/list.module.js"></script>
@@ -61,7 +61,7 @@
                 <form class="form-search">
                     <div class="input-append">
                         <input name="query" type="text" class="input-xxlarge search-query" placeholder="умный поиск" title="Введите целиком или часть: название фильма, режиссера, актера и т.д.">
-                        <button type="submit" class="btn">Найти</button>
+                        <button type="submit" class="btn btn-primary">Найти</button>
                     </div>
                 </form>
 
@@ -77,7 +77,7 @@
                         <fieldset class="extended-search-fields-container"></fieldset>
                         <div class="control-group">
                             <div class="controls">
-                                <button type="submit" class="btn">Найти</button>
+                                <button type="submit" class="btn btn-primary">Найти</button>
 
                                 <span class="filter-save-container">
                                     <span class="input-append">
@@ -147,7 +147,7 @@
                 <% if(field.type=='text' || field.type=='file'){%>
                     <% if(field.name=='title'){%><a href="#myModal" data-toggle="modal" class="list-item-edit"><% }; %>
                     <%= row.value[field.name] %>
-                    <% if(field.name=='title'){%></a><% }; %>
+                    <% if(field.name=='title'){%></a> <a href="/element/index/<%= row.id %>" target="_blank">json</a><% }; %>
 				<% } else if (field.type='list'){ %>
 				    <% _.each(row.value[field.name], function(item, i) { %><% if ( i > 0) {%>, <% }; %><%= item.name %><% }); %>
 				<% }; %>
@@ -172,7 +172,7 @@
         <div class="controls">
             <input type="text" id="<%= prefix %>Input<%= field.name %>" name="<%= field.name %>" value="<% if('text'==field.type){%><%= field.value %><% }; %>">
             <% if('list'==field.type){%>
-                <div>
+                <div class="list-value-container">
                     <% _.each(field.value, function(value) { %>
                         <span class="label"><%= value.name %> <i class="icon-remove list-value-remove" title="Удалить" data-id="<%= value.id %>" data-attribute="<%= field.name %>"></i></span>
                     <% }); %>

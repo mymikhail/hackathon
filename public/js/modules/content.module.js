@@ -8,11 +8,11 @@
                     title: 'Название',
                     type: 'text'
                 },
-                {
-                    name: 'genres',
-                    title: 'Жанры',
-                    type: 'list'
-                },
+//                {
+//                    name: 'genres',
+//                    title: 'Жанры',
+//                    type: 'list'
+//                },
                 {
                     name: 'image',
                     title: 'Постер',

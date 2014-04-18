@@ -102,7 +102,8 @@
             this.model.set(data.attribute, a, {silent: true});
         },
         render: function(model){
-            var fields = $.extend({}, appContent.get('fields'));
+            var self = this
+              , fields = $.extend({}, appContent.get('fields'));
             _.each(fields, function(field){
                 field.value = model.get(field.name);
             });
@@ -110,11 +111,37 @@
             var template = _.template($("#formRowTemplate").html(), {fields: appContent.get('fields'), prefix: 'popupForm'} );
             this.$el.find('.modal-body').html(template);
 
-//            $('#popupFormInputactors').autocomplete("/autocomplite/person/", {
-//                minChars: 3,
-//                queryParamName: 'query',
-//                remoteDataType: 'json'
-//            });
+            _.map( ['actors', 'directors', 'producers'], function(attribute){
+                $('#popupFormInput' + attribute).autocomplete({
+                    serviceUrl: '/autocomplite/person/',
+                    lookupLimit: 10,
+                    minChars: 3,
+                    transformResult: function(response) {
+                        var json = JSON.parse(response);
+                        return {
+                            suggestions: $.map(json, function(item) {
+                                return { value: item.name, data: item.id };
+                            })
+                        };
+                    },
+                    onSelect: function(suggestion){
+                        $(this)
+                            .val('')
+                            .next('.list-value-container')
+                            .prepend('<span class="label">' + suggestion.value + ' <i class="icon-remove list-value-remove" title="Удалить" data-id="' + suggestion.data + '" data-attribute="' + attribute + '"></i></span>')
+                        ;
+
+                        var a = self.model.get(attribute) || [];
+                        a.push({
+                            name: suggestion.value,
+                            id: suggestion.data
+                        });
+                        self.model.set(attribute, a, {silent: true});
+
+                    }
+                });
+            } );
+
         }
     });
 })(jQuery)
