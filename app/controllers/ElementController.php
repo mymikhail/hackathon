@@ -26,14 +26,8 @@ class ElementController extends Controller
 
         if (!empty($data)) {
 
-            if (!trim($data['title'])) {
-                $error['errors'] = ['title' => 'required'];
-                echo json_encode($error, JSON_UNESCAPED_UNICODE);
-                exit();
-            }
-
             $element = new Element();
-            return $element->set($data);            
+            echo json_encode($element->set($data),  JSON_UNESCAPED_UNICODE);            
         }
     }
 
@@ -44,7 +38,7 @@ class ElementController extends Controller
         if (isset($element_id) && !empty($data)) {            
 
             $element = new Element();
-            return $element->set($data, $element_id);            
+            echo json_encode($element->set($data, $element_id),  JSON_UNESCAPED_UNICODE);          
         }
     }
 
@@ -54,5 +48,5 @@ class ElementController extends Controller
             $element = new Element();
             $element->delete($element_id);
         }
-    } 
+    }    
 }

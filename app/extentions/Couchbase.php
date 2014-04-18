@@ -44,9 +44,9 @@ class Couchbase
 		$this->_instance->set(
 			$id, 
 			json_encode($data, JSON_UNESCAPED_UNICODE)
-		);	
+		);			
 
-		return json_encode(['id' => $id], JSON_UNESCAPED_UNICODE);
+		return $id;
 	}
 
 	public function view($view_name, $params = array(), $design_doc_name = self::DESIGN_DOC_NAME)
@@ -65,7 +65,7 @@ class Couchbase
 
 	protected function generateUniqueId()
 	{
-		return $this->prefics_key.J20\Uuid\Uuid::v4();
+		return $this->prefics_key.\J20\Uuid\Uuid::v4();
 	}
 
 	public function getMulti($ids)
