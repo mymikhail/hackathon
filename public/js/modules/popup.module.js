@@ -80,7 +80,7 @@
             delete data.genres;
             delete data.actors;
             delete data.directors;
-            delete data.producer;
+            delete data.producers;
 
             this.model.set(data, {silent: true}).save();
 
@@ -137,7 +137,6 @@
                             id: suggestion.data
                         });
                         self.model.set(attribute, a, {silent: true});
-
                     }
                 });
             } );
