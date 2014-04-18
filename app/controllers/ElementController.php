@@ -24,7 +24,13 @@ class ElementController extends Controller
     {       
         $data = Input::get();
 
-        if (!empty($data)) {            
+        if (!empty($data)) {
+
+            if (!trim($data['title'])) {
+                $error['errors'] = ['title' => 'required'];
+                echo json_encode($error, JSON_UNESCAPED_UNICODE);
+                exit();
+            }
 
             $element = new Element();
             return $element->set($data);            
