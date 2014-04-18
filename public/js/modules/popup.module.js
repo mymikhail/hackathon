@@ -8,7 +8,7 @@
         url: '/element/index/',
         initialize: function(){
             _.each(appContent.get('fields'), function(field, index, list){
-                oItemDefaults[field.name] = null;
+                oItemDefaults[field.name] = '';
             });
         },
         fetch: function(data){
